@@ -53,7 +53,8 @@ def train(save_dir, **kwargs):
   load = kwargs.pop('load')
   try:
     if not load and os.path.isdir(save_dir):
-      raw_input('Save directory already exists. Press <Enter> to continue or <Ctrl-c> to abort.')
+      print('Save directory already exists. Press <Enter> to continue or <Ctrl-c> to abort.', file=sys.stderr)
+      sys.exit(1)
       if os.path.isfile(os.path.join(save_dir, 'config.cfg')):
         os.remove(os.path.join(save_dir, 'config.cfg'))
   except KeyboardInterrupt:

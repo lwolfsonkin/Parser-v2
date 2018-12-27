@@ -360,6 +360,9 @@ class Configurable(object):
   @property
   def per_process_gpu_memory_fraction(self):
     return self.getfloat('per_process_gpu_memory_fraction')
+  @property
+  def num_threads(self):
+    return self.getint('num_threads')
   
   #=============================================================
   # [Zipf / Bucketer]

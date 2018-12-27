@@ -113,7 +113,13 @@ class Zipf(Configurable):
     losses = []
     with tf.Graph().as_default() as graph:
       x, y, ell, minimize = self()
-      with tf.Session() as sess:
+      # start up the session
+      config_proto = tf.ConfigProto(
+        # HACK: Hard-coded for now to 4 threads
+        intra_op_parallelism_threads=4,
+        inter_op_parallelism_threads=4
+      )
+      with tf.Session(config=config_proto) as sess:
         sess.run(tf.global_variables_initializer())
         if verbose:
           print('Fitting multi-zipfian distribution')

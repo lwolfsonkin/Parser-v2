@@ -132,7 +132,10 @@ class Network(Configurable):
       self.history = {'train': defaultdict(list), 'valid': defaultdict(list)}
     
     # start up the session
-    config_proto = tf.ConfigProto()
+    config_proto = tf.ConfigProto(
+      intra_op_parallelism_threads=self.num_threads,
+      inter_op_parallelism_threads=self.num_threads
+    )
     if self.per_process_gpu_memory_fraction == -1:
       config_proto.gpu_options.allow_growth = True
     else:
@@ -239,7 +242,10 @@ class Network(Configurable):
     start_time = time.time()
     for input_file in input_files:
       with tf.Graph().as_default():
-        config_proto = tf.ConfigProto()
+        config_proto = tf.ConfigProto(
+          intra_op_parallelism_threads=self.num_threads,
+          inter_op_parallelism_threads=self.num_threads
+        )
         if self.per_process_gpu_memory_fraction == -1:
           config_proto.gpu_options.allow_growth = True
         else:
