@@ -36,7 +36,8 @@ argparser.add_argument('--save_dir', required=True)
 subparsers = argparser.add_subparsers()
 section_names = set()
 # --section_name opt1=value1 opt2=value2 opt3=value3
-with codecs.open('config/defaults.cfg') as f:
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+with codecs.open(os.path.join(THIS_DIR, 'config/defaults.cfg')) as f:
   section_regex = re.compile('\[(.*)\]')
   for line in f:
     match = section_regex.match(line)
